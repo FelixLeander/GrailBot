@@ -1,19 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="3.10.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Discord.Net" Version="*" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="*" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="*" />
+		<PackageReference Include="Serilog" Version="*" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="*" />
+		<PackageReference Include="Serilog.Sinks.File" Version="*" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BuisnessLogic\" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Update=".gitignore">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>path\to\output\directory\.gitignore</TargetPath>
+		</None>
+	</ItemGroup>
 
 </Project>
