@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
 
-namespace GrailBot.Database;
+namespace GrailBot.Data;
 
 /// <summary>
 /// Provides interaction with the Database by inheriting from <see cref="DbContext"/>
@@ -15,6 +15,7 @@ public class DatabaseContext : DbContext
     /// <param name="optionsBuilder">Provides the usage of <see cref="SqliteDbContextOptionsBuilderExtensions.UseSqlite"/></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        Directory.CreateDirectory(@".\Database");
         optionsBuilder.UseSqlite(@"FileName=.\Database\Database.db");
     }
 

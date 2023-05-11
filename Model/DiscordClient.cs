@@ -1,7 +1,6 @@
 ﻿using Discord.WebSocket;
 using Discord;
 using GrailBot.Discord;
-using GrailBot.Database;
 
 namespace GrailBot.Model;
 
@@ -27,7 +26,7 @@ public class DiscordClient
     {
         Client.MessageReceived += delegate (SocketMessage arg)
         {
-            return new MessageSend().Called(arg);
+            return new MessageReceived().Message_Received(arg);
         };
     }
 }
