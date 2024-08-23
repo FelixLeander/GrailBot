@@ -3,16 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GrailBot.Model;
 
-public class MessageResponder
+public class MessageResponder(string prefix, Func<string, string?> function)
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string Prefix { get; set; }
-    public Func<string, string?> Function { get; set; }
-
-    public MessageResponder(string prefix, Func<string, string?> function)
-    {
-        Prefix = prefix;
-        Function = function;
-    }
+    public string Prefix { get; set; } = prefix;
+    public Func<string, string?> Function { get; set; } = function;
 }

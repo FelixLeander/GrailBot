@@ -4,32 +4,11 @@ using GrailBot.Model;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace GrailBot.Discord;
+namespace GrailBot.BuisnessLogic.Extensions;
 
-public class MessageReceived
+public static class WordCounter
 {
-    public async Task Message_Received(SocketMessage socketMessage)
-    {
-        Log.Verbose(string.IsNullOrEmpty(socketMessage.Content) ? "Empty-Message" : socketMessage.Content);
-
-        if (socketMessage.Author.IsBot)
-            return;
-
-        if (socketMessage.CleanContent.StartsWith(".lb"))
-        {
-            await WordLeaderbord(socketMessage);
-            return;
-        }
-
-        if (socketMessage.CleanContent.StartsWith("."))
-        {
-
-        }
-
-        await CountWords(socketMessage);
-    }
-
-    public async Task CountWords(SocketMessage socketMessage)
+    public static async Task CountWords(SocketMessage socketMessage)
     {
         var groups = socketMessage.CleanContent.Split(new char[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
             .GroupBy(key => key)
@@ -68,7 +47,7 @@ public class MessageReceived
         }
     }
 
-    public async Task WordLeaderbord(SocketMessage socketMessage)
+    public static async Task WordLeaderbord(SocketMessage socketMessage)
     {
         var dbWordsQuery = new DatabaseContext().WordCounts.AsNoTracking();
         var topTen = dbWordsQuery.Take(10).OrderByDescending(wc => wc.Amount).ToList();

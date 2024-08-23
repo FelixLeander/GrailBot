@@ -2,5 +2,5 @@
 
 public static class Settings
 {
-    public const string CommandPrefix = ".";
+    public const string CommandPrefix = "!";
 }

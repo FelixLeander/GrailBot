@@ -1,6 +1,7 @@
 using Discord;
+using Discord.WebSocket;
+using GrailBot.BuisnessLogic;
 using GrailBot.Data;
-using GrailBot.Model;
 using Serilog;
 using Serilog.Events;
 
@@ -10,10 +11,10 @@ public static class Program
 {
     public static async Task<int> Main(string[] args)
     {
-        DiscordClient? discordClient = null;
+        DiscordManager? discordManager = null;
         try
         {
-            var filePath = Path.Combine("discordBot", "logs", "log.log");
+            var filePath = Path.Combine("logs", "log.log");
             var dirPath = Directory.GetParent(filePath)?.FullName ?? "";
             if (dirPath != null)
                 Directory.CreateDirectory(dirPath);
@@ -45,13 +46,13 @@ public static class Program
                 client.Database.EnsureCreated();
             }
 
-            discordClient = new DiscordClient();
-            discordClient.Client.Log += HandleLogMessage;
-            discordClient.SetupEventHandlers();
+            discordManager = new DiscordManager();
+            discordManager.Client.Log += HandleLogMessage;
+            discordManager.Client.MessageReceived += new DiscordManager().Message_Send;
 
-            await discordClient.Login(botToken);
+            await discordManager.Login(botToken);
 
-            builder.Services.AddSingleton(discordClient);
+            builder.Services.AddSingleton(discordManager);
 
             var app = builder.Build();
             app.Run();
@@ -66,10 +67,11 @@ public static class Program
         }
         finally
         {
+            Console.WriteLine("Finally:");
             try
             {
-                if (discordClient != null)
-                    await discordClient.Client.LogoutAsync();
+                if (discordManager != null)
+                    await discordManager.Client.LogoutAsync();
                 Log.Verbose("Logged-off discord on exit.");
             }
             catch (Exception ex)
